@@ -4,9 +4,9 @@ function parseGrid(gridAsString) {
   var gridArray = gridAsString.split(' ');
   var twoDGridArray = [];
 
-	for (var j = 0; j < gridArray.length; j++) {
-		gridArray[j] = parseInt(gridArray[j], 10);
-	}
+  for (var j = 0; j < gridArray.length; j++) {
+    gridArray[j] = parseInt(gridArray[j], 10);
+  }
 
   for (var i = 0; i < 20; i++) {
     twoDGridArray.push(gridArray.slice(20 * i, 20 * (i + 1)));
@@ -18,69 +18,69 @@ function parseGrid(gridAsString) {
 function findLargestProduct(twoDGrid) {
   var currentMax = 0;
   var getDirectionProduct = function(i, row, col) {
-		var directionHash = {
-			'0': function() { 
-				if (row >= 3) {
-					return twoDGrid[row - 1][col] * twoDGrid[row - 2][col] * twoDGrid[row - 3][col];
-				}
-			},
-			'1': function() {
-				if (row >= 3 && col <= 16) {
-					return twoDGrid[row - 1][col + 1] * twoDGrid[row - 2][col + 2] * twoDGrid[row - 3][col + 3];
-				}
-			},
-			'2': function() {
-				if (col <= 16) {
-					return twoDGrid[row][col + 1] * twoDGrid[row][col + 2] * twoDGrid[row][col + 3];
-				}
-			},
-			'3': function() {
-				if (row <= 16 && col <= 16) {
-					return twoDGrid[row + 1][col + 1] * twoDGrid[row + 2][col + 2] * twoDGrid[row + 3][col + 3];
-				}
-			},
-			'4': function() {
-				if (row <= 16) {
-					return twoDGrid[row + 1][col] * twoDGrid[row + 2][col] * twoDGrid[row + 3][col];
-				}
-			},
-			'5': function() {
-				if (row <= 16 && col >= 3) {
-					return twoDGrid[row + 1][col - 1] * twoDGrid[row + 2][col - 2] * twoDGrid[row + 3][col - 3];
-				}
-			},
-			'6': function() {
-				if (col >= 3) {
-					return twoDGrid[row][col - 1] * twoDGrid[row][col - 2] * twoDGrid[row][col - 3];
-				}
-			},
-			'7': function() {
-				if (row >= 3 && col >= 3) {
-					return twoDGrid[row - 1][col - 1] * twoDGrid[row - 2][col - 2] * twoDGrid[row - 3][col - 3];
-				}
-			}
-		};
+    var directionHash = {
+      '0': function() {
+        if (row >= 3) {
+          return twoDGrid[row - 1][col] * twoDGrid[row - 2][col] * twoDGrid[row - 3][col];
+        }
+      },
+      '1': function() {
+        if (row >= 3 && col <= 16) {
+          return twoDGrid[row - 1][col + 1] * twoDGrid[row - 2][col + 2] * twoDGrid[row - 3][col + 3];
+        }
+      },
+      '2': function() {
+        if (col <= 16) {
+          return twoDGrid[row][col + 1] * twoDGrid[row][col + 2] * twoDGrid[row][col + 3];
+        }
+      },
+      '3': function() {
+        if (row <= 16 && col <= 16) {
+          return twoDGrid[row + 1][col + 1] * twoDGrid[row + 2][col + 2] * twoDGrid[row + 3][col + 3];
+        }
+      },
+      '4': function() {
+        if (row <= 16) {
+          return twoDGrid[row + 1][col] * twoDGrid[row + 2][col] * twoDGrid[row + 3][col];
+        }
+      },
+      '5': function() {
+        if (row <= 16 && col >= 3) {
+          return twoDGrid[row + 1][col - 1] * twoDGrid[row + 2][col - 2] * twoDGrid[row + 3][col - 3];
+        }
+      },
+      '6': function() {
+        if (col >= 3) {
+          return twoDGrid[row][col - 1] * twoDGrid[row][col - 2] * twoDGrid[row][col - 3];
+        }
+      },
+      '7': function() {
+        if (row >= 3 && col >= 3) {
+          return twoDGrid[row - 1][col - 1] * twoDGrid[row - 2][col - 2] * twoDGrid[row - 3][col - 3];
+        }
+      }
+    };
 
-		if (typeof directionHash[i]() !== 'undefined') {
-			return directionHash[i]() * twoDGrid[row][col];
-		}
-	};
+    if (typeof directionHash[i]() !== 'undefined') {
+      return directionHash[i]() * twoDGrid[row][col];
+    }
+  };
 
-	// For each value in the 2D table
-	for (var row = 0; row < 20; row++) {
-		for (var col = 0; col < 20; col++) {
-	
-			// For each direction, determine if it is valid, and if so
-  		// return the product.
-  		for (var i = 0; i < 8; i++) {
-				var directionProduct = getDirectionProduct(i, row, col);
-    
-    		if (typeof directionProduct !== 'undefined') {
-					currentMax = Math.max(directionProduct, currentMax);
-				}
-  		}
-		}
-	}
+  // For each value in the 2D table
+  for (var row = 0; row < 20; row++) {
+    for (var col = 0; col < 20; col++) {
+
+      // For each direction, determine if it is valid, and if so
+      // return the product.
+      for (var i = 0; i < 8; i++) {
+        var directionProduct = getDirectionProduct(i, row, col);
+
+        if (typeof directionProduct !== 'undefined') {
+          currentMax = Math.max(directionProduct, currentMax);
+        }
+      }
+    }
+  }
 
   return currentMax;
 }
